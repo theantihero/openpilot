@@ -1,6 +1,6 @@
 from cereal import car
 from collections import defaultdict
-from common.numpy_fast import interp
+from common.numpy_fast import interp, clip #Clarity: Clip is needed to support create_radar_commands in hondacan. -wirelessnet2
 from opendbc.can.can_define import CANDefine
 from opendbc.can.parser import CANParser
 from selfdrive.config import Conversions as CV
@@ -216,7 +216,7 @@ class CarState(CarStateBase):
     v_weight = interp(v_wheel, v_weight_bp, v_weight_v)
     ret.vEgoRaw = (1. - v_weight) * cp.vl["ENGINE_DATA"]['XMISSION_SPEED'] * CV.KPH_TO_MS * speed_factor + v_weight * v_wheel
     ret.vEgo, ret.aEgo = self.update_speed_kf(ret.vEgoRaw)
-    self.vEgo = ret.vEgo
+    self.vEgoRawKph = clip(int((1. - v_weight) * cp.vl["ENGINE_DATA"]['XMISSION_SPEED'] * speed_factor + v_weight * v_wheel), 0, 255) #Clarity: This supports create_radar_commands() in hondacan. -wirelessnet2
 
     ret.steeringAngle = cp.vl["STEERING_SENSORS"]['STEER_ANGLE']
     ret.steeringRate = cp.vl["STEERING_SENSORS"]['STEER_ANGLE_RATE']

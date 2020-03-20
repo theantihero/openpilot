@@ -181,6 +181,6 @@ class CarController():
       radar_send_step = 5
   #    if (frame % radar_send_step) == 0:
       idx = (frame/radar_send_step) % 4
-      can_sends.extend(hondacan.create_radar_commands(CS.vEgo, CS.CP.carFingerprint, self.new_radar_config, idx))
+      can_sends.extend(hondacan.create_radar_commands(self.packer, CS.vEgoRawKph, idx))
 
     return can_sends
