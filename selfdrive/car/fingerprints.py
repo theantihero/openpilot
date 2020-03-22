@@ -13,17 +13,15 @@ def get_attr_from_cars(attr, result=dict): #Clarity: This modification limits th
     values = __import__('selfdrive.car.%s.values' % car_name, fromlist=[attr])
     if hasattr(values, attr):
       attr_values = getattr(values, attr)
-     else:
-       continue
 
-     if isinstance(attr_values, dict):
-       for f, v in attr_values.items():
-         result[f] = v
-     elif isinstance(attr_values, list):
+    if isinstance(attr_values, dict):
+      for f, v in attr_values.items():
+        result[f] = v
+    elif isinstance(attr_values, list):
       result += attr_values
 
-   except (ImportError, IOError):
-     pass
+  except (ImportError, IOError):
+    pass
 
   return result
 
