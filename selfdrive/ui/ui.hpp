@@ -57,7 +57,7 @@ const int vwp_h = 1080;
 const int nav_w = 640;
 const int nav_ww= 760;
 const int sbr_w = 300;
-const int bdr_s = 30;
+const int bdr_s = 0;
 const int box_x = sbr_w+bdr_s;
 const int box_y = bdr_s;
 const int box_w = vwp_w-sbr_w-(bdr_s*2);
@@ -143,6 +143,15 @@ typedef struct UIScene {
 
   float awareness_status;
 
+  float angleSteers;
+  bool brakeLights;
+  float angleSteersDes;
+  bool recording;
+  float gpsAccuracyUblox;
+  int engineRPM;
+  bool steerOverride;
+  float output_scale;
+
   // Used to show gps planner status
   bool gps_planner_active;
 
@@ -197,6 +206,7 @@ typedef struct UIState {
   int img_battery;
   int img_battery_charging;
   int img_network[6];
+  int img_brake;
 
   // sockets
   Context *ctx;
@@ -209,6 +219,9 @@ typedef struct UIState {
   SubSocket *thermal_sock;
   SubSocket *health_sock;
   SubSocket *ubloxgnss_sock;
+  SubSocket *carstate_sock;
+  SubSocket *livempc_sock;
+  SubSocket *gpslocationexternal_sock;
   Poller * poller;
   Poller * ublox_poller;
 
