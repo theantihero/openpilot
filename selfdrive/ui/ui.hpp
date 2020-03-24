@@ -153,6 +153,8 @@ typedef struct UIScene {
   int engineRPM;
   bool steerOverride;
   float output_scale;
+  float steeringTorqueEps;
+  float aEgo;
 
   // Used to show gps planner status
   bool gps_planner_active;
