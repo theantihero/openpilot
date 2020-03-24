@@ -515,6 +515,7 @@ void handle_message(UIState *s, Message * msg) {
     {
       s->scene.gpsAccuracyUblox = 99.8;
     }
+    s->scene.altitudeUblox = datad.altitude;
   }
   capn_free(&ctx);
 }

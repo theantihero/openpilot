@@ -57,7 +57,7 @@ const int vwp_h = 1080;
 const int nav_w = 640;
 const int nav_ww= 760;
 const int sbr_w = 300;
-const int bdr_s = 0;
+const int bdr_s = 5;
 const int bdr_is = 30;
 const int box_x = sbr_w+bdr_s;
 const int box_y = bdr_s;
@@ -84,11 +84,11 @@ const int TRACK_POINTS_MAX_CNT = 50 * 2;
 
 const int SET_SPEED_NA = 255;
 
-const uint8_t bg_colors[][4] = {
-  [STATUS_STOPPED] = {0x07, 0x23, 0x39, 0xff},
-  [STATUS_DISENGAGED] = {0x17, 0x33, 0x49, 0xff},
-  [STATUS_ENGAGED] = {0x17, 0x86, 0x44, 0xff},
-  [STATUS_WARNING] = {0xDA, 0x6F, 0x25, 0xff},
+const uint8_t bg_colors[][4] = { //I reduced the alpha of all alerts except for the red critical alert. -wirelessnet2
+  [STATUS_STOPPED] = {0x07, 0x23, 0x39, 0x7D},
+  [STATUS_DISENGAGED] = {0x17, 0x33, 0x49, 0x7D},
+  [STATUS_ENGAGED] = {0x17, 0x86, 0x44, 0x7D},
+  [STATUS_WARNING] = {0xDA, 0x6F, 0x25, 0x87},
   [STATUS_ALERT] = {0xC9, 0x22, 0x31, 0xff},
 };
 
@@ -149,6 +149,7 @@ typedef struct UIScene {
   float angleSteersDes;
   bool recording;
   float gpsAccuracyUblox;
+  float altitudeUblox;
   int engineRPM;
   bool steerOverride;
   float output_scale;
