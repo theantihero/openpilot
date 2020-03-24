@@ -16,6 +16,8 @@ extern "C"{
 #include "common/glutil.h"
 }
 
+int border_shifter = 30 //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
+
 // TODO: this is also hardcoded in common/transformations/camera.py
 const mat3 intrinsic_matrix = (mat3){{
   910., 0., 582.,
@@ -509,7 +511,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   } else {
     nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 100));
   }
-  nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 148, "MAX", NULL);
+  nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 148-border_shifter, "MAX", NULL); //If bdr_s is changed, must offset 148 so the MAX isn't misaligned -wirelessnet2
 
   // Draw Speed Text
   nvgFontFace(s->vg, "sans-bold");
@@ -517,12 +519,12 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   if (is_cruise_set) {
     snprintf(maxspeed_str, sizeof(maxspeed_str), "%d", maxspeed_calc);
     nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 255));
-    nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 242, maxspeed_str, NULL);
+    nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 242-border_shifter, maxspeed_str, NULL); //If bdr_s is changed, must offset 242 so the speed isn't misaligned -wirelessnet2
   } else {
     nvgFontFace(s->vg, "sans-semibold");
     nvgFontSize(s->vg, 42*2.5);
     nvgFillColor(s->vg, nvgRGBA(255, 255, 255, 100));
-    nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 242, "-", NULL);
+    nvgText(s->vg, viz_maxspeed_x+(viz_maxspeed_xo/2)+(viz_maxspeed_w/2), 242-border_shifter, "-", NULL); //If bdr_s is changed, must offset 242 so the - isn't misaligned -wirelessnet2
   }
 
 }
@@ -730,12 +732,12 @@ static void ui_draw_vision_map(UIState *s) {
 
 static void ui_draw_vision_face(UIState *s) {
   const UIScene *scene = &s->scene;
-  const int face_size = 96;
+  const int face_size = 88; //Made the DM Face a bit smaller -wirelessnet2
   const int face_x = (scene->ui_viz_rx + face_size + (bdr_is * 2));
   const int face_y = (footer_y + ((footer_h - face_size) / 2));
   const int face_img_size = (face_size * 1.5);
   const int face_img_x = (face_x - (face_img_size / 2));
-  const int face_img_y = (face_y - (face_size / 4));
+  const int face_img_y = (face_y - (face_size / 4)+border_shifter-5); //Move the DM face with the border width -wirelessnet2
   float face_img_alpha = scene->monitoring_active ? 1.0f : 0.15f;
   float face_bg_alpha = scene->monitoring_active ? 0.3f : 0.1f;
   NVGcolor face_bg = nvgRGBA(0, 0, 0, (255 * face_bg_alpha));
@@ -743,7 +745,7 @@ static void ui_draw_vision_face(UIState *s) {
     face_img_size, face_img_size, 0, s->img_face, face_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)), face_size);
+  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter-5), face_size);
   nvgFillColor(s->vg, face_bg);
   nvgFill(s->vg);
 
@@ -755,12 +757,12 @@ static void ui_draw_vision_face(UIState *s) {
 
 static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
-  const int brake_size = 96;
+  const int brake_size = 88; //made the Brake Icon a bit smaller -wirelessnet2
   const int brake_x = (scene->ui_viz_rx + (brake_size * 5) + (bdr_is * 3));
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
-  const int brake_img_y = (brake_y - (brake_size / 4));
+  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter-5);
 
   bool brake_valid = scene->brakeLights;
   float brake_img_alpha = brake_valid ? 1.0f : 0.15f;
@@ -770,7 +772,7 @@ static void ui_draw_vision_brake(UIState *s) {
     brake_img_size, brake_img_size, 0, s->img_brake, brake_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)), brake_size);
+  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter-5), brake_size);
   nvgFillColor(s->vg, brake_bg);
   nvgFill(s->vg);
 
@@ -924,6 +926,13 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
         value_fontSize, label_fontSize, uom_fontSize );
     bb_ry = bb_y + bb_h;
   }
+  //finally draw the frame
+  bb_h += 20;
+  nvgBeginPath(s->vg);
+    nvgRoundedRect(s->vg, bb_x, bb_y, bb_w, bb_h, 20);
+    nvgStrokeColor(s->vg, nvgRGBA(255,255,255,80));
+    nvgStrokeWidth(s->vg, 6);
+    nvgStroke(s->vg);
 }
 
 static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w ) {
