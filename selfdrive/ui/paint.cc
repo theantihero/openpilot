@@ -920,10 +920,10 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   //add aEgo
   if (true) {
     char val_str[16];
-    char uom_str[3];
+    char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
     snprintf(val_str, sizeof(val_str), "%.1f", (s->scene.aEgo));
-    snprintf(uom_str, sizeof(uom_str), "m/s/s");
+    snprintf(uom_str, sizeof(uom_str), "m/s²");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "Accel",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
