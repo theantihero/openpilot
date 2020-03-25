@@ -484,8 +484,6 @@ void handle_message(UIState *s, Message * msg) {
     s->scene.freeSpace = datad.freeSpace;
     s->scene.thermalStatus = datad.thermalStatus;
     s->scene.paTemp = datad.pa0;
-    s->scene.batTemp = datad.bat;
-    s->scene.cpu0Temp = datad.cpu0;
   } else if (eventd.which == cereal_Event_ubloxGnss) {
     struct cereal_UbloxGnss datad;
     cereal_read_UbloxGnss(&datad, eventd.ubloxGnss);

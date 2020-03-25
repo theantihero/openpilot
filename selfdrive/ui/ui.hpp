@@ -57,7 +57,7 @@ const int vwp_h = 1080;
 const int nav_w = 640;
 const int nav_ww= 760;
 const int sbr_w = 300;
-const int bdr_s = 10;
+const int bdr_s = 8;
 const int bdr_is = 30;
 const int box_x = sbr_w+bdr_s;
 const int box_y = bdr_s;
@@ -153,10 +153,8 @@ typedef struct UIScene {
   int engineRPM;
   bool steerOverride;
   float output_scale;
-  int steeringTorqueEps;
+  float steeringTorqueEps;
   float aEgo;
-  int cpu0Temp;
-  int batTemp;
 
   // Used to show gps planner status
   bool gps_planner_active;
