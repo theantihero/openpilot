@@ -858,26 +858,8 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-    char cpu_temp[5];
-    int fd;
-    //Read the file with the CPU temp.  1 is equal to .1 degree Celius.
-    fd = open("/sys/class/thermal/thermal_zone6/temp", O_RDONLY);
-    if(fd == -1)
-    {
-    //can't open
-    }
-    else
-    {
-      read(fd, &cpu_temp, 4);
-    }
-
-
-    cpu_temp[2] = '\0';
-    close(fd);
-
-      // temp is alway in C * 10
-      snprintf(val_str, sizeof(val_str), "%s°C", (cpu_temp));
-      snprintf(uom_str, sizeof(uom_str), "");
+    snprintf(val_str, sizeof(val_str), "%s°C", (scene->cpu0Temp));
+    snprintf(uom_str, sizeof(uom_str), "");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU TEMP",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
