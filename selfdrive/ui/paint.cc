@@ -737,7 +737,7 @@ static void ui_draw_vision_face(UIState *s) {
   const int face_y = (footer_y + ((footer_h - face_size) / 2));
   const int face_img_size = (face_size * 1.5);
   const int face_img_x = (face_x - (face_img_size / 2));
-  const int face_img_y = (face_y - (face_size / 4)+border_shifter+10); //Move the DM face with the border width -wirelessnet2
+  const int face_img_y = (face_y - (face_size / 4)+border_shifter+15); //Move the DM face with the border width -wirelessnet2
   float face_img_alpha = scene->monitoring_active ? 1.0f : 0.15f;
   float face_bg_alpha = scene->monitoring_active ? 0.3f : 0.1f;
   NVGcolor face_bg = nvgRGBA(0, 0, 0, (255 * face_bg_alpha));
@@ -745,7 +745,7 @@ static void ui_draw_vision_face(UIState *s) {
     face_img_size, face_img_size, 0, s->img_face, face_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter+10), face_size);
+  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter+15), face_size);
   nvgFillColor(s->vg, face_bg);
   nvgFill(s->vg);
 
@@ -762,7 +762,7 @@ static void ui_draw_vision_brake(UIState *s) {
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
-  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter+10);
+  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter+15);
 
   bool brake_valid = scene->brakeLights;
   float brake_img_alpha = brake_valid ? 1.0f : 0.15f;
@@ -772,7 +772,7 @@ static void ui_draw_vision_brake(UIState *s) {
     brake_img_size, brake_img_size, 0, s->img_brake, brake_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter+10), brake_size);
+  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter+15), brake_size);
   nvgFillColor(s->vg, brake_bg);
   nvgFill(s->vg);
 
@@ -1101,7 +1101,7 @@ static void bb_ui_draw_UI(UIState *s)
   const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 220;
 
   bb_ui_draw_measures_right(s, bb_dml_x, bb_dml_y, bb_dml_w);
-  bb_ui_draw_measures_left(s, bb_dmr_x, bb_dmr_y-10, bb_dmr_w);
+  bb_ui_draw_measures_left(s, bb_dmr_x, bb_dmr_y-20, bb_dmr_w);
 }
 //BB END: functions added for the display of various items
 
