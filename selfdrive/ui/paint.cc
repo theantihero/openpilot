@@ -16,7 +16,7 @@ extern "C"{
 #include "common/glutil.h"
 }
 
-int border_shifter = 22; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
+int border_shifter = 20; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
 
 // TODO: this is also hardcoded in common/transformations/camera.py
 const mat3 intrinsic_matrix = (mat3){{
@@ -659,7 +659,7 @@ static void ui_draw_vision_event(UIState *s) {
   const int viz_event_h = (header_h - (bdr_is*1.5));
   if (s->scene.decel_for_model && s->scene.engaged) {
     // draw winding road sign
-    const int img_turn_size = 160*1.5;
+    const int img_turn_size = 160*1.5*0.9375; //.9375 is the same factor I scaled the steering wheel image by -wirelessnet2
     const int img_turn_x = viz_event_x-(img_turn_size/4);
     const int img_turn_y = viz_event_y+bdr_is-25;
     float img_turn_alpha = 1.0f;
@@ -671,7 +671,7 @@ static void ui_draw_vision_event(UIState *s) {
     nvgFill(s->vg);
   } else {
     // draw steering wheel
-    const int bg_wheel_size = 96;
+    const int bg_wheel_size = 90; //I made the wheel a bit smaller -wirelessnet2
     const int bg_wheel_x = viz_event_x + (viz_event_w-bg_wheel_size);
     const int bg_wheel_y = viz_event_y + (bg_wheel_size/2);
     const int img_wheel_size = bg_wheel_size*1.5;
@@ -737,7 +737,7 @@ static void ui_draw_vision_face(UIState *s) {
   const int face_y = (footer_y + ((footer_h - face_size) / 2));
   const int face_img_size = (face_size * 1.5);
   const int face_img_x = (face_x - (face_img_size / 2));
-  const int face_img_y = (face_y - (face_size / 4)+border_shifter); //Move the DM face with the border width -wirelessnet2
+  const int face_img_y = (face_y - (face_size / 4)+border_shifter+5); //Move the DM face with the border width -wirelessnet2
   float face_img_alpha = scene->monitoring_active ? 1.0f : 0.15f;
   float face_bg_alpha = scene->monitoring_active ? 0.3f : 0.1f;
   NVGcolor face_bg = nvgRGBA(0, 0, 0, (255 * face_bg_alpha));
@@ -745,7 +745,7 @@ static void ui_draw_vision_face(UIState *s) {
     face_img_size, face_img_size, 0, s->img_face, face_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter), face_size);
+  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter+5), face_size);
   nvgFillColor(s->vg, face_bg);
   nvgFill(s->vg);
 
@@ -758,11 +758,11 @@ static void ui_draw_vision_face(UIState *s) {
 static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
   const int brake_size = 85; //made the Brake Icon a bit smaller -wirelessnet2
-  const int brake_x = (scene->ui_viz_rx + (brake_size * 5) + (bdr_is * 3));
+  const int brake_x = (scene->ui_viz_rx + (brake_size * 5) + (bdr_is * 2.5)); //Moved brake icon a bit closer to DM icon -wirelessnet2
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
-  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter);
+  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter+5);
 
   bool brake_valid = scene->brakeLights;
   float brake_img_alpha = brake_valid ? 1.0f : 0.15f;
@@ -772,7 +772,7 @@ static void ui_draw_vision_brake(UIState *s) {
     brake_img_size, brake_img_size, 0, s->img_brake, brake_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter), brake_size);
+  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter+5), brake_size);
   nvgFillColor(s->vg, brake_bg);
   nvgFill(s->vg);
 
@@ -842,7 +842,7 @@ static int bb_ui_draw_measure(UIState *s,  const char* bb_value, const char* bb_
   return (int)((bb_valueFontSize + bb_labelFontSize)*2.5) + 5;
 }
 
-static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) {
+static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y-5, int bb_w ) {
   const UIScene *scene = &s->scene;
   int bb_rx = bb_x + (int)(bb_w/2);
   int bb_ry = bb_y;
@@ -858,26 +858,8 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-    char cpu_temp[5];
-    int fd;
-    //Read the file with the CPU temp.  1 is equal to .1 degree Celius.
-    fd = open("/sys/class/thermal/thermal_zone6/temp", O_RDONLY);
-    if(fd == -1)
-    {
-    //can't open
-    }
-    else
-    {
-      read(fd, &cpu_temp, 4);
-    }
-
-
-    cpu_temp[2] = '\0';
-    close(fd);
-
-      // temp is alway in C * 10
-      snprintf(val_str, sizeof(val_str), "%s°C", (cpu_temp));
-      snprintf(uom_str, sizeof(uom_str), "");
+    snprintf(val_str, sizeof(val_str), "%s°C", (scene->cpu0Temp));
+    snprintf(uom_str, sizeof(uom_str), "");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU TEMP",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
@@ -927,7 +909,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     char val_str[16];
     char uom_str[3];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200); //TODO: Add orange/red color depending on torque intensity. <1x limit = white, btwn 1x-2x limit = orange, >2x limit = red
-    snprintf(val_str, sizeof(val_str), "%.1f", (s->scene.steeringTorqueEps));
+    snprintf(val_str, sizeof(val_str), "%d", (s->scene.steeringTorqueEps));
     snprintf(uom_str, sizeof(uom_str), "Nm");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "EPS TRQ",
         bb_rx, bb_ry, bb_uom_dx,
@@ -938,10 +920,10 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
   //add aEgo
   if (true) {
     char val_str[16];
-    char uom_str[3];
+    char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
     snprintf(val_str, sizeof(val_str), "%.1f", (s->scene.aEgo));
-    snprintf(uom_str, sizeof(uom_str), "m/s/s");
+    snprintf(uom_str, sizeof(uom_str), "m/s²");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "Accel",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
