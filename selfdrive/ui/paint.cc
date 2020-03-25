@@ -16,7 +16,7 @@ extern "C"{
 #include "common/glutil.h"
 }
 
-int border_shifter = 25; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
+int border_shifter = 22; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
 
 // TODO: this is also hardcoded in common/transformations/camera.py
 const mat3 intrinsic_matrix = (mat3){{
@@ -732,12 +732,12 @@ static void ui_draw_vision_map(UIState *s) {
 
 static void ui_draw_vision_face(UIState *s) {
   const UIScene *scene = &s->scene;
-  const int face_size = 88; //Made the DM Face a bit smaller -wirelessnet2
+  const int face_size = 85; //Made the DM Face a bit smaller -wirelessnet2
   const int face_x = (scene->ui_viz_rx + face_size + (bdr_is * 2));
   const int face_y = (footer_y + ((footer_h - face_size) / 2));
   const int face_img_size = (face_size * 1.5);
   const int face_img_x = (face_x - (face_img_size / 2));
-  const int face_img_y = (face_y - (face_size / 4)+border_shifter-5); //Move the DM face with the border width -wirelessnet2
+  const int face_img_y = (face_y - (face_size / 4)+border_shifter); //Move the DM face with the border width -wirelessnet2
   float face_img_alpha = scene->monitoring_active ? 1.0f : 0.15f;
   float face_bg_alpha = scene->monitoring_active ? 0.3f : 0.1f;
   NVGcolor face_bg = nvgRGBA(0, 0, 0, (255 * face_bg_alpha));
@@ -745,7 +745,7 @@ static void ui_draw_vision_face(UIState *s) {
     face_img_size, face_img_size, 0, s->img_face, face_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter-5), face_size);
+  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter), face_size);
   nvgFillColor(s->vg, face_bg);
   nvgFill(s->vg);
 
@@ -757,12 +757,12 @@ static void ui_draw_vision_face(UIState *s) {
 
 static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
-  const int brake_size = 88; //made the Brake Icon a bit smaller -wirelessnet2
+  const int brake_size = 85; //made the Brake Icon a bit smaller -wirelessnet2
   const int brake_x = (scene->ui_viz_rx + (brake_size * 5) + (bdr_is * 3));
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
-  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter-5);
+  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter);
 
   bool brake_valid = scene->brakeLights;
   float brake_img_alpha = brake_valid ? 1.0f : 0.15f;
@@ -772,7 +772,7 @@ static void ui_draw_vision_brake(UIState *s) {
     brake_img_size, brake_img_size, 0, s->img_brake, brake_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter-5), brake_size);
+  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter), brake_size);
   nvgFillColor(s->vg, brake_bg);
   nvgFill(s->vg);
 
@@ -930,6 +930,19 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     snprintf(val_str, sizeof(val_str), "%d", (s->scene.steeringTorqueEps));
     snprintf(uom_str, sizeof(uom_str), "Nm");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "EPS TRQ",
+        bb_rx, bb_ry, bb_uom_dx,
+        val_color, lab_color, uom_color,
+        value_fontSize, label_fontSize, uom_fontSize );
+    bb_ry = bb_y + bb_h;
+  }
+  //add aEgo
+  if (true) {
+    char val_str[16];
+    char uom_str[3];
+    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
+    snprintf(val_str, sizeof(val_str), "%.1f", (s->scene.aEgo));
+    snprintf(uom_str, sizeof(uom_str), "m/s/s");
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "Accel",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
