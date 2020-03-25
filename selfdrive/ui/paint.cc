@@ -1101,7 +1101,7 @@ static void bb_ui_draw_UI(UIState *s)
   const int bb_dmr_y = (box_y + (bdr_is * 1.5)) + 220;
 
   bb_ui_draw_measures_right(s, bb_dml_x, bb_dml_y, bb_dml_w);
-  bb_ui_draw_measures_left(s, bb_dmr_x, bb_dmr_y, bb_dmr_w);
+  bb_ui_draw_measures_left(s, bb_dmr_x, bb_dmr_y-10, bb_dmr_w);
 }
 //BB END: functions added for the display of various items
 
