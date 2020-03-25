@@ -156,7 +156,7 @@ typedef struct UIScene {
   float steeringTorqueEps;
   float aEgo;
   float cpu0Temp;
-  int batTemp;
+  float batTemp;
 
   // Used to show gps planner status
   bool gps_planner_active;

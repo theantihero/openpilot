@@ -737,7 +737,7 @@ static void ui_draw_vision_face(UIState *s) {
   const int face_y = (footer_y + ((footer_h - face_size) / 2));
   const int face_img_size = (face_size * 1.5);
   const int face_img_x = (face_x - (face_img_size / 2));
-  const int face_img_y = (face_y - (face_size / 4)+border_shifter+5); //Move the DM face with the border width -wirelessnet2
+  const int face_img_y = (face_y - (face_size / 4)+border_shifter+10); //Move the DM face with the border width -wirelessnet2
   float face_img_alpha = scene->monitoring_active ? 1.0f : 0.15f;
   float face_bg_alpha = scene->monitoring_active ? 0.3f : 0.1f;
   NVGcolor face_bg = nvgRGBA(0, 0, 0, (255 * face_bg_alpha));
@@ -745,7 +745,7 @@ static void ui_draw_vision_face(UIState *s) {
     face_img_size, face_img_size, 0, s->img_face, face_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter+5), face_size);
+  nvgCircle(s->vg, face_x, (face_y + (bdr_is * 1.5)+border_shifter+10), face_size);
   nvgFillColor(s->vg, face_bg);
   nvgFill(s->vg);
 
@@ -762,7 +762,7 @@ static void ui_draw_vision_brake(UIState *s) {
   const int brake_y = (footer_y + ((footer_h - brake_size) / 2));
   const int brake_img_size = (brake_size * 1.5);
   const int brake_img_x = (brake_x - (brake_img_size / 2));
-  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter+5);
+  const int brake_img_y = (brake_y - (brake_size / 4)+border_shifter+10);
 
   bool brake_valid = scene->brakeLights;
   float brake_img_alpha = brake_valid ? 1.0f : 0.15f;
@@ -772,7 +772,7 @@ static void ui_draw_vision_brake(UIState *s) {
     brake_img_size, brake_img_size, 0, s->img_brake, brake_img_alpha);
 
   nvgBeginPath(s->vg);
-  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter+5), brake_size);
+  nvgCircle(s->vg, brake_x, (brake_y + (bdr_is * 1.5)+border_shifter+10), brake_size);
   nvgFillColor(s->vg, brake_bg);
   nvgFill(s->vg);
 
@@ -909,7 +909,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     char val_str[16];
     char uom_str[3];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200); //TODO: Add orange/red color depending on torque intensity. <1x limit = white, btwn 1x-2x limit = orange, >2x limit = red
-    snprintf(val_str, sizeof(val_str), "%.1f", (s->scene.steeringTorqueEps));
+    snprintf(val_str, sizeof(val_str), "%.0f", (s->scene.steeringTorqueEps));
     snprintf(uom_str, sizeof(uom_str), "Nm");
     bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "EPS TRQ",
         bb_rx, bb_ry, bb_uom_dx,
