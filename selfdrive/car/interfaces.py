@@ -120,7 +120,7 @@ class CarInterfaceBase():
     # e.g. Chrysler does not spam the resume button yet, so resuming with gas is handy. FIXME!
     if (cs_out.brakePressed and (not self.brake_pressed_prev or cs_out.vEgo > 0.001)):
       events.append(create_event('pedalPressed', [ET.NO_ENTRY, ET.USER_DISABLE]))
-    if not cs_out.cruiseState.enabled and (cs_out.gasPressed and not self.gas_pressed_prev):
+    if cs_out.cruiseState.enabled and (cs_out.gasPressed and not self.gas_pressed_prev):
       events.append(create_event('pedalPressed', [ET.NO_ENTRY, ET.USER_DISABLE]))
 
     return events
