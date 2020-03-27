@@ -360,7 +360,7 @@ class CarState(CarStateBase):
       if b.type in [ButtonType.accelCruise, ButtonType.decelCruise] and not b.pressed:
         enable_pressed = True
 
-      if (b.type == "cancel" and b.pressed) or ret.brake_pressed or not main_on:
+      if (b.type == "cancel" and b.pressed) or ret.brakePressed or not main_on:
         self.gasToggle = True
         self.brakeToggle = True
         self.openpilotEngagedWithGasDepressed = False
