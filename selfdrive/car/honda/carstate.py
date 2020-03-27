@@ -174,7 +174,7 @@ class CarState(CarStateBase):
     self.engineRPM = 0
     self.cruise_off = False
     self.gas_has_been_pressed_since_cruise_off = False
-    ret.cruiseState.enabled_prev = 0
+    self.pcm_acc_status_prev = False
     self.openpilotEngagedWithGasDepressed = False
     self.preEnableAlert = False
 
@@ -371,11 +371,11 @@ class CarState(CarStateBase):
     self.cruise_setting = cp.vl["SCM_BUTTONS"]['CRUISE_SETTING']
 
     if self.pedal_gas > 0:
-      if ret.cruiseState.enabled != ret.cruiseState.enabled_prev:
+      if ret.cruiseState.enabled != self.pcm_acc_status_prev:
         if ret.cruiseState.enabled == True: #pcm_acc_status = 1 is engaged. -wirelessnet2
           self.openpilotEngagedWithGasDepressed = True
 
-    self.cruise_off = self.CP.enableCruise and ret.cruiseState.enabled == 0 #Clarity: If the regen paddles are pulled, the PCM stops taking computer_gas requests. -wirelessnet2
+    self.cruise_off = self.CP.enableCruise and not ret.cruiseState.enabled #Clarity: If the regen paddles are pulled, the PCM stops taking computer_gas requests. -wirelessnet2
 
     if ret.cruiseState.enabled == 0:
       self.openpilotEngagedWithGasDepressed = False
@@ -403,7 +403,7 @@ class CarState(CarStateBase):
       self.gasToggle = True
       self.preEnableAlert = False
 
-    ret.cruiseState.enabled_prev = ret.cruiseState.enabled
+    self.pcm_acc_status_prev = ret.cruiseState.enabled
 
 
     # TODO: discover the CAN msg that has the imperial unit bit for all other cars
