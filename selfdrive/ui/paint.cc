@@ -16,7 +16,7 @@ extern "C"{
 #include "common/glutil.h"
 }
 
-int _s_shifter = 20; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
+int border_shifter = 20; //Use this to move elements around depending on how much bdr_s is changed -wirelessnet2
 
 // TODO: this is also hardcoded in common/transformations/camera.py
 const mat3 intrinsic_matrix = (mat3){{
