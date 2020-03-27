@@ -172,7 +172,6 @@ class CarState(CarStateBase):
     self.v_cruise_pcm_prev = 0
     self.cruise_mode = 0
     self.engineRPM = 0
-    self.cruise_off = False
     self.gas_has_been_pressed_since_cruise_off = False
     self.pcm_acc_status_prev = False
     self.openpilotEngagedWithGasDepressed = False
@@ -375,22 +374,20 @@ class CarState(CarStateBase):
         if ret.cruiseState.enabled == True: #pcm_acc_status = 1 is engaged. -wirelessnet2
           self.openpilotEngagedWithGasDepressed = True
 
-    self.cruise_off = self.CP.enableCruise and not ret.cruiseState.enabled #Clarity: If the regen paddles are pulled, the PCM stops taking computer_gas requests. -wirelessnet2
-
     if ret.cruiseState.enabled == 0:
       self.openpilotEngagedWithGasDepressed = False
 
-    if not self.cruise_off and self.openpilotEngagedWithGasDepressed:
+    if not (self.CP.enableCruise and not ret.cruiseState.enabled) and self.openpilotEngagedWithGasDepressed:
       self.gas_has_been_pressed_since_cruise_off = False
       self.openpilotEngagedWithGasDepressed = False
 
-    if self.cruise_off and self.pedal_gas > 0:
+    if (self.CP.enableCruise and not ret.cruiseState.enabled) and self.pedal_gas > 0:
       self.gas_has_been_pressed_since_cruise_off = True
 
     if enable_pressed:
       self.gas_has_been_pressed_since_cruise_off = False
 
-    if self.cruise_off and self.gas_has_been_pressed_since_cruise_off:
+    if (self.CP.enableCruise and not ret.cruiseState.enabled) and self.gas_has_been_pressed_since_cruise_off:
       self.brakeToggle = False
       self.gasToggle = False
 
@@ -398,7 +395,7 @@ class CarState(CarStateBase):
       if enable_pressed:
         self.preEnableAlert = True
 
-    if not self.cruise_off and self.pedal_gas == 0:
+    if not (self.CP.enableCruise and not ret.cruiseState.enabled) and self.pedal_gas == 0:
       self.brakeToggle = True
       self.gasToggle = True
       self.preEnableAlert = False
