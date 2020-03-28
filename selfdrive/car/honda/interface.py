@@ -438,6 +438,7 @@ class CarInterface(CarInterfaceBase):
                            c.actuators.brake > brakelights_threshold)
     
     ret.lkMode = self.CS.lkMode
+    ret.readdistancelines = self.CS.read_distance_lines
     ret.engineRPM = self.CS.engineRPM
     ret.brakeToggle = self.CS.brakeToggle
 
