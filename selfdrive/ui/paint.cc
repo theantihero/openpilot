@@ -878,6 +878,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
     bb_ry = bb_y + bb_h;
+    }
   //add Ublox GPS accuracy
   if (scene->gpsAccuracyUblox != 0.00) {
     char val_str[16];
