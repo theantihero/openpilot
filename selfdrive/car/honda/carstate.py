@@ -371,12 +371,19 @@ class CarState(CarStateBase):
       if b.type in [ButtonType.accelCruise, ButtonType.decelCruise] and not b.pressed:
         enable_pressed = True
 
-      if (b.type == "cancel" and b.pressed) or ret.brakePressed or not main_on:
+      if (b.type == "cancel" and b.pressed):
         self.gasToggle = True
         self.brakeToggle = True
         self.openpilotEngagedWithGasDepressed = False
         self.gas_has_been_pressed_since_cruise_off = False
         self.preEnableAlert = False
+
+    if ret.brakePressed or not main_on:
+      self.gasToggle = True
+      self.brakeToggle = True
+      self.openpilotEngagedWithGasDepressed = False
+      self.gas_has_been_pressed_since_cruise_off = False
+      self.preEnableAlert = False
 
     self.cruise_setting = cp.vl["SCM_BUTTONS"]['CRUISE_SETTING']
     self.read_distance_lines = self.trMode + 1
@@ -388,20 +395,20 @@ class CarState(CarStateBase):
         if ret.cruiseState.enabled == True: #pcm_acc_status = 1 is engaged. -wirelessnet2
           self.openpilotEngagedWithGasDepressed = True
 
-    if ret.cruiseState.enabled == 0:
+    if ret.cruiseState.enabled == False:
       self.openpilotEngagedWithGasDepressed = False
 
-    if not (self.CP.enableCruise and not ret.cruiseState.enabled) and self.openpilotEngagedWithGasDepressed:
+    if not ret.cruiseState.enabled and self.pedal_gas > 0:
+      self.gas_has_been_pressed_since_cruise_off = True
+
+    if ret.cruiseState.enabled and self.openpilotEngagedWithGasDepressed:
       self.gas_has_been_pressed_since_cruise_off = False
       self.openpilotEngagedWithGasDepressed = False
-
-    if (self.CP.enableCruise and not ret.cruiseState.enabled) and self.pedal_gas > 0:
-      self.gas_has_been_pressed_since_cruise_off = True
 
     if enable_pressed:
       self.gas_has_been_pressed_since_cruise_off = False
 
-    if (self.CP.enableCruise and not ret.cruiseState.enabled) and self.gas_has_been_pressed_since_cruise_off:
+    if not ret.cruiseState.enabled and self.gas_has_been_pressed_since_cruise_off:
       self.brakeToggle = False
       self.gasToggle = False
 
@@ -409,7 +416,7 @@ class CarState(CarStateBase):
       if enable_pressed:
         self.preEnableAlert = True
 
-    if not (self.CP.enableCruise and not ret.cruiseState.enabled) and self.pedal_gas == 0:
+    if ret.cruiseState.enabled and self.pedal_gas == 0:
       self.brakeToggle = True
       self.gasToggle = True
       self.preEnableAlert = False
