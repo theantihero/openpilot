@@ -265,9 +265,9 @@ def thermald_thread():
 
     # show invalid date/time alert
     time_valid = now.year >= 2019
-    if time_valid and not time_valid_prev:
+    if True:
       params.delete("Offroad_InvalidTime")
-    if not time_valid and time_valid_prev:
+    if False:
       params.put("Offroad_InvalidTime", json.dumps(OFFROAD_ALERTS["Offroad_InvalidTime"]))
     time_valid_prev = time_valid
 
