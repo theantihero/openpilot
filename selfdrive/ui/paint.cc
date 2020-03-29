@@ -659,9 +659,9 @@ static void ui_draw_vision_event(UIState *s) {
   const int viz_event_h = (header_h - (bdr_is*1.5));
   if (true) {
     // draw winding road sign
-    const int img_turn_size = 160*1.5*0.9375; //.9375 is the same factor I scaled the steering wheel image by -wirelessnet2
-    const int img_turn_x = viz_event_x-(img_turn_size/4)+50;
-    const int img_turn_y = viz_event_y+bdr_is-50;
+    const int img_turn_size = 160*1.5*0.90; //.9375 is the same factor I scaled the steering wheel image by -wirelessnet2
+    const int img_turn_x = viz_event_x-(img_turn_size/4)+65;
+    const int img_turn_y = viz_event_y+bdr_is-60;
     float img_turn_alpha = 1.0f;
     nvgBeginPath(s->vg);
     NVGpaint imgPaint = nvgImagePattern(s->vg, img_turn_x, img_turn_y,
