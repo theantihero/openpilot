@@ -153,6 +153,8 @@ typedef struct UIScene {
   int engineRPM;
   bool steerOverride;
   float output_scale;
+  float steeringTorqueEps;
+  float aEgo;
   float cpu0Temp;
   float batTemp;
 
