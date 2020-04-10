@@ -144,6 +144,7 @@ class CarInterface(CarInterfaceBase):
     ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0], [0]]
     ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
     ret.lateralTuning.pid.kf = 0.00004 # conservative feed-forward
+    ret.steerRatioV = 0.005 #Random Convervative Value -wirelessnet2
 
     eps_modified = False
     for fw in car_fw:
@@ -219,6 +220,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.24]]
       tire_stiffness_factor = 1.
+      ret.steerRatioV = 0.009 #Maybe confirm this value by visiting TechInfo? This was obtained experimentally -wirelessnet2
 
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
       ret.longitudinalTuning.kpV = [3.6, 2.4, 1.5]
