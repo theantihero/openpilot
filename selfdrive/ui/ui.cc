@@ -533,7 +533,7 @@ void handle_message(UIState *s,  Message* msg) {
     scene.awareness_status = data.getAwarenessStatus();
     s->preview_started = data.getIsPreview();
   } else if (which == cereal::Event::CAR_STATE) {
-    auto data = event.getCar().getCarState();
+    auto data = event.getCarState();
     s->scene.brakeLights = data.getBrakeLights();
     s->scene.engineRPM = data.getEngineRPM();
     s->scene.aEgo = data.getAEgo();
