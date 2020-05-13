@@ -389,7 +389,7 @@ void handle_message(UIState *s,  Message* msg) {
   UIScene &scene = s->scene;
   if (which == cereal::Event::CONTROLS_STATE && s->started) {
     auto data = event.getControlsState();
-    auto data2 = event.getControlsState().getLateralControlState().getLateralPIDState();
+    auto data2 = event.getControlsState().getLateralControlState();
 
     s->controls_timeout = 1 * UI_FREQ;
     scene.frontview = data.getRearViewCam();
@@ -533,12 +533,14 @@ void handle_message(UIState *s,  Message* msg) {
     scene.awareness_status = data.getAwarenessStatus();
     s->preview_started = data.getIsPreview();
   } else if (which == cereal::Event::CAR_STATE) {
+    auto data = event.getCarState();
     s->scene.brakeLights = data.getBrakeLights();
     s->scene.engineRPM = data.EngineRPM();
     s->scene.aEgo = data.getAEgo();
     s->scene.steeringTorqueEps = data.getSteeringTorqueEPS();
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
-    s->scene.gpsAccuracyUblox = datad.accuracy;
+    auto data = event.getGpsLocationExternal();
+    s->scene.gpsAccuracyUblox = data.getAccuracy();
     if (s->scene.gpsAccuracyUblox > 100)
     {
       s->scene.gpsAccuracyUblox = 99.99;
