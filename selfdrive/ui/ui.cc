@@ -389,7 +389,7 @@ void handle_message(UIState *s,  Message* msg) {
   UIScene &scene = s->scene;
   if (which == cereal::Event::CONTROLS_STATE && s->started) {
     auto data = event.getControlsState();
-    auto data2 = event.getControlsState().getLateralPIDState();
+    auto data2 = event.getControlsState().getLateralControlState().getLateralPIDState();
 
     s->controls_timeout = 1 * UI_FREQ;
     scene.frontview = data.getRearViewCam();
@@ -403,7 +403,7 @@ void handle_message(UIState *s,  Message* msg) {
     s->scene.angleSteers = data.getAngleSteers();
     s->scene.steerOverride= data.getSteerOverride();
     s->scene.output_scale = data2.getOutput();
-    s->scene.angleSteersDes = data.getAngleSteerDes():
+    s->scene.angleSteersDes = data.getAngleSteersDes();
     scene.curvature = data.getCurvature();
     scene.engaged = data.getEnabled();
     scene.engageable = data.getEngageable();
@@ -508,8 +508,8 @@ void handle_message(UIState *s,  Message* msg) {
     scene.freeSpace = data.getFreeSpace();
     scene.thermalStatus = data.getThermalStatus();
     scene.paTemp = data.getPa0();
-    s->scene.batTemp = round((data.getBat)/10); //UNVERIFIED
-    s->scene.cpu0Temp = round((data.getCpu0)/10); //UNVERIFIED
+    s->scene.batTemp = data.getBat();
+    s->scene.cpu0Temp = data.getCpu0();
 
     s->thermal_started = data.getStarted();
   } else if (which == cereal::Event::UBLOX_GNSS) {
