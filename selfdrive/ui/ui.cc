@@ -537,7 +537,7 @@ void handle_message(UIState *s,  Message* msg) {
     s->scene.brakeLights = data.getBrakeLights();
     s->scene.engineRPM = data.getEngineRPM();
     s->scene.aEgo = data.getAEgo();
-    s->scene.steeringTorqueEps = data.getSteeringTorqueEPS();
+    s->scene.steeringTorqueEps = data.getSteeringTorqueEps();
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
     auto data = event.getGpsLocationExternal();
     s->scene.gpsAccuracyUblox = data.getAccuracy();
