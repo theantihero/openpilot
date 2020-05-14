@@ -509,6 +509,7 @@ void handle_message(UIState *s,  Message* msg) {
     scene.thermalStatus = data.getThermalStatus();
     scene.paTemp = data.getPa0();
     s->scene.cpu0Temp = round((data.getCpu0())/10);
+    s->scene.cpuPerc = data.getCpuPerc();
 
     s->thermal_started = data.getStarted();
   } else if (which == cereal::Event::UBLOX_GNSS) {
@@ -540,14 +541,6 @@ void handle_message(UIState *s,  Message* msg) {
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
     auto data = event.getGpsLocationExternal();
     s->scene.gpsAccuracyUblox = data.getAccuracy();
-    if (s->scene.gpsAccuracyUblox > 100)
-    {
-      s->scene.gpsAccuracyUblox = 99.99;
-    }
-    else if (s->scene.gpsAccuracyUblox == 0)
-    {
-      s->scene.gpsAccuracyUblox = 99.8;
-    }
     s->scene.altitudeUblox = data.getAltitude();
   }
 
