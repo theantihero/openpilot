@@ -508,7 +508,6 @@ void handle_message(UIState *s,  Message* msg) {
     scene.freeSpace = data.getFreeSpace();
     scene.thermalStatus = data.getThermalStatus();
     scene.paTemp = data.getPa0();
-    s->scene.batTemp = data.getBat();
     s->scene.cpu0Temp = data.getCpu0();
 
     s->thermal_started = data.getStarted();
