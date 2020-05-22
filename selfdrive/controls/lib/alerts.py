@@ -64,14 +64,14 @@ ALERTS = [
       "",
       "",
       AlertStatus.normal, AlertSize.none,
-      Priority.MID, VisualAlert.none, AudibleAlert.chimeEngage, .2, 0., 0.),
+      Priority.MID, VisualAlert.none, AudibleAlert.chimeEngage, 1., 0., 0.),
 
   Alert(
       "disable",
       "",
       "",
       AlertStatus.normal, AlertSize.none,
-      Priority.MID, VisualAlert.none, AudibleAlert.chimeDisengage, .2, 0., 0.),
+      Priority.MID, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 0., 0.),
 
   Alert(
       "fcw",
@@ -295,7 +295,7 @@ ALERTS = [
       "openpilot Unavailable",
       "Main Switch Off",
       AlertStatus.normal, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.chimeEngage, .4, 0., 3.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.chimeError, .4, 0., 3.),
 
   Alert(
       "dataNeededNoEntry",
@@ -545,21 +545,21 @@ ALERTS = [
       "openpilot Canceled",
       "No close lead car",
       AlertStatus.normal, AlertSize.mid,
-      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "speedTooLow",
       "openpilot Canceled",
       "Speed too low",
       AlertStatus.normal, AlertSize.mid,
-      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "speedTooHigh",
       "Speed Too High",
       "Slow down to resume operation",
       AlertStatus.normal, AlertSize.mid,
-      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   # Cancellation alerts causing non-entry
   Alert(
@@ -707,28 +707,28 @@ ALERTS = [
       "openpilot Unavailable",
       "Communication Issue between Processes",
       AlertStatus.normal, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "radarCommIssueNoEntry",
       "openpilot Unavailable",
       "Radar Communication Issue",
       AlertStatus.normal, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "internetConnectivityNeededNoEntry",
       "openpilot Unavailable",
       "Please Connect to Internet",
       AlertStatus.normal, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "lowMemoryNoEntry",
       "openpilot Unavailable",
       "Low Memory: Reboot Your Device",
       AlertStatus.normal, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, .4, 2., 3.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.chimeDisengage, 1., 2., 3.),
 
   Alert(
       "speedTooHighNoEntry",
