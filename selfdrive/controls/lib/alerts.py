@@ -64,7 +64,7 @@ ALERTS = [
       "",
       "",
       AlertStatus.normal, AlertSize.none,
-      Priority.MID, VisualAlert.none, AudibleAlert.chimeEngage, 1., 0., 0.),
+      Priority.MID, VisualAlert.none, AudibleAlert.chimeEngage, .8, 0., 0.),
 
   Alert(
       "disable",
@@ -92,7 +92,7 @@ ALERTS = [
       "TAKE CONTROL",
       "Turn Exceeds Steering Limit",
       AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.chimePrompt, 1., 2., 2.),
+      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.chimeWarningTorque, 1., 2., 2.),
 
   Alert(
       "manualSteeringRequired",

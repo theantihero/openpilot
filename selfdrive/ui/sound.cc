@@ -37,6 +37,7 @@ sound_file sound_table[] = {
   { cereal::CarControl::HUDControl::AudibleAlert::CHIME_ERROR, "../assets/sounds/error.wav", false },
   { cereal::CarControl::HUDControl::AudibleAlert::CHIME_PROMPT, "../assets/sounds/error.wav", false },
   { cereal::CarControl::HUDControl::AudibleAlert::CHIME_LDW, "../assets/sounds/lane_departure_warning.wav", false},
+  { cereal::CarControl::HUDControl::AudibleAlert::CHIME_WARNING_TORQUE, "../assets/sounds/warning_torque.wav", false},
   { cereal::CarControl::HUDControl::AudibleAlert::NONE, NULL, false },
 };
 

@@ -328,6 +328,7 @@ struct CarControl {
       chimePrompt @7;
       chimeWarning2Repeat @8;
       chimeLdw @9;
+      chimeWarningTorque @10;
     }
   }
 }
