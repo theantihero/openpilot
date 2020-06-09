@@ -461,7 +461,7 @@ void handle_message(UIState *s, SubMaster &sm) {
     auto data = sm["ubloxGnss"].getUbloxGnss();
     if (data.which() == cereal::UbloxGnss::MEASUREMENT_REPORT) {
       scene.satelliteCount = data.getMeasurementReport().getNumMeas();
-      s->scene.satelliteCount = scene.satelliteCount
+      s->scene.satelliteCount = scene.satelliteCount;
     }
   }
   if (sm.updated("health")) {
