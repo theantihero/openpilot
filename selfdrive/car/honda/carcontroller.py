@@ -30,8 +30,11 @@ def actuator_hystereses(brake, braking, brake_steady, v_ego, car_fingerprint):
     brake_steady = brake + brake_hyst_gap
   brake = brake_steady
 
-  if (car_fingerprint in (CAR.ACURA_ILX, CAR.CRV, CAR.CRV_EU, CAR.CLARITY)) and brake > 0.0:
+  if (car_fingerprint in (CAR.ACURA_ILX, CAR.CRV, CAR.CRV_EU)) and brake > 0.0:
     brake += 0.15
+  
+  if (car_fingerprint in (CAR.CLARITY)) and brake > 0.0:
+    brake += 0.0075
 
   return brake, braking, brake_steady
 
