@@ -115,6 +115,9 @@ typedef struct UIScene {
   int ui_viz_rw;
   int ui_viz_ro;
 
+  int lead_status;
+  float lead_d_rel, lead_v_rel;
+
   int front_box_x, front_box_y, front_box_width, front_box_height;
 
   std::string alert_text1;
@@ -147,7 +150,7 @@ typedef struct UIScene {
   cereal::RadarState::LeadData::Reader lead_data[2];
   cereal::ControlsState::Reader controls_state;
   cereal::DriverState::Reader driver_state;
-  cereal::ControlsState::LateralPIDState::Reader controls_state_pid;
+  cereal::ControlsState::LateralControlState::PidState::Reader controls_state_pid;
 } UIScene;
 
 typedef struct {

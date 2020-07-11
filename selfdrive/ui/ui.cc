@@ -285,7 +285,7 @@ void handle_message(UIState *s, SubMaster &sm) {
   if (s->started && sm.updated("controlsState")) {
     auto event = sm["controlsState"];
     scene.controls_state = event.getControlsState();
-    scene.controls_state_pid = event.getControlsState().getLateralPidState();
+    scene.controls_state_pid = event.getControlsState().lateralControlState().getPidState();
     s->controls_timeout = 1 * UI_FREQ;
     scene.frontview = scene.controls_state.getRearViewCam();
     if (!scene.frontview){ s->controls_seen = true; }
@@ -338,6 +338,9 @@ void handle_message(UIState *s, SubMaster &sm) {
     auto data = sm["radarState"].getRadarState();
     scene.lead_data[0] = data.getLeadOne();
     scene.lead_data[1] = data.getLeadTwo();
+    scene.lead_v_rel = scene.lead_data[0],getVRel();
+    scene.lead_d_rel = scene.lead_data[0].getDRel();
+    scene.lead_status = scene.lead_data[0].getStatus();
   }
   if (sm.updated("liveCalibration")) {
     scene.world_objects_visible = true;
