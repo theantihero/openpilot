@@ -285,7 +285,7 @@ void handle_message(UIState *s, SubMaster &sm) {
   if (s->started && sm.updated("controlsState")) {
     auto event = sm["controlsState"];
     scene.controls_state = event.getControlsState();
-    scene.controls_state_pid = event.getControlsState().getLateralControlState().getPidState();
+    scene.controls_state_pid = event.getControlsState().getLateralPidState();
     s->controls_timeout = 1 * UI_FREQ;
     scene.frontview = scene.controls_state.getRearViewCam();
     if (!scene.frontview){ s->controls_seen = true; }

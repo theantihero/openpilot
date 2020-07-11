@@ -147,6 +147,7 @@ typedef struct UIScene {
   cereal::RadarState::LeadData::Reader lead_data[2];
   cereal::ControlsState::Reader controls_state;
   cereal::DriverState::Reader driver_state;
+  cereal::ControlsState::LateralPIDState::Reader controls_state_pid;
 } UIScene;
 
 typedef struct {
@@ -255,6 +256,8 @@ typedef struct UIState {
   std::atomic<float> light_sensor;
 
   int touch_fd;
+
+  bool livempc_or_radarstate_changed;
 
   GLuint frame_vao[2], frame_vbo[2], frame_ibo[2];
   mat4 rear_frame_mat, front_frame_mat;
