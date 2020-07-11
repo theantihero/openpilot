@@ -257,7 +257,6 @@ typedef struct UIState {
 
   int touch_fd;
 
-  bool livempc_or_radarstate_changed;
 
   GLuint frame_vao[2], frame_vbo[2], frame_ibo[2];
   mat4 rear_frame_mat, front_frame_mat;

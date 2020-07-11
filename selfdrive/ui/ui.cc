@@ -357,7 +357,6 @@ void handle_message(UIState *s, SubMaster &sm) {
       scene.mpc_x[i] = x_list[i];
       scene.mpc_y[i] = y_list[i];
     }
-    s->livempc_or_radarstate_changed = true;
   }
   if (sm.updated("uiLayoutState")) {
     auto data = sm["uiLayoutState"].getUiLayoutState();
