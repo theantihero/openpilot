@@ -285,14 +285,13 @@ void handle_message(UIState *s, SubMaster &sm) {
   if (s->started && sm.updated("controlsState")) {
     auto event = sm["controlsState"];
     scene.controls_state = event.getControlsState();
-    scene.controls_state_pid = event.getControlsState().lateralControlState().getPidState();
     s->controls_timeout = 1 * UI_FREQ;
     scene.frontview = scene.controls_state.getRearViewCam();
     if (!scene.frontview){ s->controls_seen = true; }
 
     s->scene.angleSteers = scene.controls_state.getAngleSteers();
     s->scene.steerOverride= scene.controls_state.getSteerOverride();
-    s->scene.output_scale = scene.controls_state_pid.getOutput();
+    s->scene.output_scale = scene.controls_state.getLateralControlState().getPidState().getOutput();
     s->scene.angleSteersDes = scene.controls_state.getAngleSteersDes();
 
     auto alert_sound = scene.controls_state.getAlertSound();
@@ -338,9 +337,9 @@ void handle_message(UIState *s, SubMaster &sm) {
     auto data = sm["radarState"].getRadarState();
     scene.lead_data[0] = data.getLeadOne();
     scene.lead_data[1] = data.getLeadTwo();
-    scene.lead_v_rel = scene.lead_data[0],getVRel();
-    scene.lead_d_rel = scene.lead_data[0].getDRel();
-    scene.lead_status = scene.lead_data[0].getStatus();
+    s->scene.lead_v_rel = scene.lead_data[0].getVRel();
+    s->scene.lead_d_rel = scene.lead_data[0].getDRel();
+    s->scene.lead_status = scene.lead_data[0].getStatus();
   }
   if (sm.updated("liveCalibration")) {
     scene.world_objects_visible = true;
@@ -373,6 +372,8 @@ void handle_message(UIState *s, SubMaster &sm) {
 #endif
   if (sm.updated("thermal")) {
     scene.thermal = sm["thermal"].getThermal();
+    s->scene.cpu0Temp = scene.thermal.getCpu0();
+    s->scene.cpuPerc = scene.thermal.getCpuPerc();
   }
   if (sm.updated("ubloxGnss")) {
     auto data = sm["ubloxGnss"].getUbloxGnss();
