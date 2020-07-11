@@ -227,7 +227,7 @@ void draw_lock_button(UIState *s) {
   int btn_h = 150;
   int btn_x = 1920 - btn_w - 150;
   int btn_y = 1080 - btn_h;
-  int imgw, imgh;
+  //int imgw, imgh; How tf did this break? -wirelessnet2
   float alpha = 0.3f;
 
   if (!lock_image) {
@@ -336,12 +336,6 @@ void dashcam( UIState *s, int touch_x, int touch_y ) {
   if (!s->started) {
     // Assume car is not in drive so stop recording
     stop_capture();
-  }
-  if (s->scene.v_ego > 3.1 && captureState == CAPTURE_STATE_PAUSED) {
-    start_capture();
-  } else if (s->scene.v_ego < 2.9 && captureState == CAPTURE_STATE_CAPTURING) {
-    stop_capture();
-    captureState = CAPTURE_STATE_PAUSED;
   }
   s->scene.recording = (captureState != CAPTURE_STATE_NOT_CAPTURING);
 }
