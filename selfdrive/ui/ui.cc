@@ -381,6 +381,9 @@ void handle_message(UIState *s, SubMaster &sm) {
       scene.satelliteCount = data.getMeasurementReport().getNumMeas();
       s->scene.satelliteCount = scene.satelliteCount;
     }
+    auto data2 = sm["gpsLocationExternal"].getGpsLocationExternal();
+    s->scene.gpsAccuracyUblox = data2.getAccuracy();
+    s->scene.altitudeUblox = data2.getAltitude();
   }
   if (sm.updated("health")) {
     scene.hwType = sm["health"].getHealth().getHwType();
@@ -399,12 +402,8 @@ void handle_message(UIState *s, SubMaster &sm) {
     s->scene.engineRPM = data.getEngineRPM();
     s->scene.aEgo = data.getAEgo();
     s->scene.steeringTorqueEps = data.getSteeringTorqueEps();
-  } else if (sm.updated("gpsLocationExternal")) {
-    auto data = sm["gpsLocationExternal"].getGpsLocationExternal();
-    s->scene.gpsAccuracyUblox = data.getAccuracy();
-    s->scene.altitudeUblox = data.getAltitude();
-  }
-
+  } 
+  
   s->started = scene.thermal.getStarted() || s->preview_started;
   // Handle onroad/offroad transition
   if (!s->started) {
