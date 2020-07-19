@@ -155,7 +155,7 @@ class CarInterface(CarInterfaceBase):
       if fw.ecu == "eps" and b"-" not in fw.fwVersion:
         eps_modified_3x = True
         print("3x MODIFIED EPS DETECTED")
-      else if fw.ecu = "eps" and b"," in fw.fwVersion:
+      elif fw.ecu = "eps" and b"," in fw.fwVersion:
         eps_modified = True
         print("2x MODIFIED EPS DETECTED")
 
@@ -228,7 +228,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x7800], [0, 2560, 3840]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.0985], [0.033]]
         print("BRUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-      else if eps_modified:
+      elif eps_modified:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x7800], [0, 2560, 3840]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.0985], [0.033]]
         print("!!!!!!!!!!!!!!!MODIFIED TUNING VALUES USED!!!!!!!!!!!!!!!")
