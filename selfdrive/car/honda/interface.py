@@ -151,6 +151,7 @@ class CarInterface(CarInterfaceBase):
     ret.steerRatioV = 0.0045 #Random Convervative Value -wirelessnet2
 
     eps_modified = False
+    eps_modified_3x = False
     for fw in car_fw:
       if fw.ecu == "eps" and b"-" not in fw.fwVersion:
         eps_modified_3x = True
