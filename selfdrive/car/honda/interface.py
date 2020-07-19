@@ -152,9 +152,12 @@ class CarInterface(CarInterfaceBase):
 
     eps_modified = False
     for fw in car_fw:
-      if fw.ecu == "eps" and b"," in fw.fwVersion:
+      if fw.ecu == "eps" and b"-" not in fw.fwVersion:
+        eps_modified_3x = True
+        print("3x MODIFIED EPS DETECTED")
+      else if fw.ecu = "eps" and b"," in fw.fwVersion:
         eps_modified = True
-        print("MODIFIED EPS DETECTED")
+        print("2x MODIFIED EPS DETECTED")
 
     if candidate == CAR.CIVIC:
       stop_and_go = True
@@ -221,7 +224,11 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.75
       ret.centerToFront = ret.wheelbase * 0.4
       ret.steerRatio = 16.50  # was 17.03, 12.72 is end-to-end spec
-      if eps_modified:
+      if eps_modified_3x:
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x7800], [0, 2560, 3840]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.0985], [0.033]]
+        print("BRUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+      else if eps_modified:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x7800], [0, 2560, 3840]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.0985], [0.033]]
         print("!!!!!!!!!!!!!!!MODIFIED TUNING VALUES USED!!!!!!!!!!!!!!!")
