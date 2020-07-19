@@ -155,7 +155,7 @@ class CarInterface(CarInterfaceBase):
       if fw.ecu == "eps" and b"-" not in fw.fwVersion:
         eps_modified_3x = True
         print("3x MODIFIED EPS DETECTED")
-      elif fw.ecu = "eps" and b"," in fw.fwVersion:
+      elif fw.ecu == "eps" and b"," in fw.fwVersion:
         eps_modified = True
         print("2x MODIFIED EPS DETECTED")
 
