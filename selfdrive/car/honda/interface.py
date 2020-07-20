@@ -227,11 +227,11 @@ class CarInterface(CarInterfaceBase):
       ret.steerRatio = 16.50  # was 17.03, 12.72 is end-to-end spec
       if eps_modified_3x:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x3C00], [0, 2560, 3840]]
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.22], [0.072]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.2], [0.065]]
         print("clarity.brUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH") # @clarity.bru: Hello =P -wirelessnet2
       elif eps_modified:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x2800], [0, 2560, 3840]]
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.33], [0.1]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.32], [0.1]]
         print("!!!!!!!!!!!!!!!!!!2x MODIFIED TUNING VALUES USED!!!!!!!!!!!!!!!!!!")
       else:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
