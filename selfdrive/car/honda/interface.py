@@ -231,7 +231,7 @@ class CarInterface(CarInterfaceBase):
         print("clarity.brUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH") # @clarity.bru: Hello =P -wirelessnet2
       elif eps_modified:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x2800], [0, 2560, 3840]]
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.35], [0.11]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.33], [0.1]]
         print("!!!!!!!!!!!!!!!!!!2x MODIFIED TUNING VALUES USED!!!!!!!!!!!!!!!!!!")
       else:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
